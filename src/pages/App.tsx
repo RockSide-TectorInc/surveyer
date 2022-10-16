@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './app.css';
+import '../css/app.css';
 import {
     Box, Button,
     Container,
@@ -10,15 +10,15 @@ import {
     Typography
 } from "@mui/material";
 import {Cancel, Save} from "@mui/icons-material";
-import FieldComponent from "./components/FieldComponent";
-import {Field} from "./interfaces/Field";
-import TabPanel, {moreTabProps} from './components/common/TabPanel';
-import {FieldCreatable} from "./implementation/FieldCreatable";
-import {Option} from "./interfaces/Option";
-import useComponentUtils from "./hooks/useComponentUtils";
-import OptionWrapper from "./components/OptionWrapper";
-import Integrator, {IntegratorMap} from "./components/Integrator";
-import AppModal from "./components/common/AppModal";
+import FieldComponent from "../components/FieldComponent";
+import {Field} from "../interfaces/Field";
+import TabPanel, {moreTabProps} from '../components/common/TabPanel';
+import {FieldCreatable} from "../implementation/FieldCreatable";
+import {Option} from "../interfaces/Option";
+import useComponentUtils from "../hooks/useComponentUtils";
+import OptionWrapper from "../components/OptionWrapper";
+import Integrator, {IntegratorMap} from "../components/Integrator";
+import AppModal from "../components/common/AppModal";
 
 function App() {
     const [field, setField] = useState<Field>({label: "", desc: ""});
