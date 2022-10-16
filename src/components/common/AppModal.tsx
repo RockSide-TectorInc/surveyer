@@ -1,4 +1,4 @@
-import {Box, Modal, ModalProps} from '@mui/material';
+import {Box, List, Modal, ModalProps} from '@mui/material';
 import React from 'react';
 
 const style = {
@@ -20,7 +20,9 @@ const AppModal = ({children, open, setOpen}: AppModalProps) => {
     return (
         <Modal open={open} onClose={handleClose}>
             <Box sx={style}>
-                {children}
+                <List disablePadding sx={{width: "100%"}}>
+                    {children}
+                </List>
             </Box>
         </Modal>
     );

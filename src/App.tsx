@@ -3,17 +3,14 @@ import './app.css';
 import {
     Box, Button,
     Container,
-    Grid, Paper, Radio, Snackbar,
-    Tab, Table, TableBody, TableCell,
-    TableHead,
-    TableRow,
+    Grid, ListItemButton, ListItemText, Snackbar,
+    Tab,
     Tabs,
     Tooltip,
     Typography
 } from "@mui/material";
 import {Cancel, Save} from "@mui/icons-material";
 import FieldComponent from "./components/FieldComponent";
-import Options from "./components/Options";
 import {Field} from "./interfaces/Field";
 import TabPanel, {moreTabProps} from './components/common/TabPanel';
 import {FieldCreatable} from "./implementation/FieldCreatable";
@@ -110,7 +107,15 @@ function App() {
             />
 
             <AppModal setOpen={setOpen} open={open}>
-                <pre>{JSON.stringify(form)}</pre>
+                <>
+                    {
+                        Object.entries(form).map((value, index) => (
+                            <ListItemButton key={index}>
+                                <ListItemText primary={value[0]} secondary={value[1]}/>
+                            </ListItemButton>
+                        ))
+                    }
+                </>
             </AppModal>
 
         </Container>
