@@ -4,13 +4,13 @@ import {
     Box, Button,
     Container,
     Grid, IconButton,
-    Paper, Radio,
+    Paper, Radio, Snackbar,
     Tab, Table, TableBody, TableCell,
     TableContainer,
     TableHead,
     TableRow,
     Tabs,
-    TextField,
+    TextField, Tooltip,
     Typography
 } from "@mui/material";
 import {Add, AddCircle, ArrowDownwardRounded, ArrowUpwardRounded, Cancel, Save} from "@mui/icons-material";
@@ -20,9 +20,22 @@ import Field from "./components/Field";
 function App() {
     const [state, setState] = useState<FieldCreatable>(new FieldCreatable("", ""));
 
+    const [message, setMessage] = useState<string>("");
+
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setMessage("");
+    };
+
     const [value, setValue] = React.useState(0);
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+        if (newValue > 0 && !state.label.trim()) {
+            setMessage("Please add a label to the survey options.")
+            setValue(0);
+        } else
+            setValue(newValue)
     };
 
     const [selectedValue, setSelectedValue] = React.useState('a');
@@ -31,8 +44,7 @@ function App() {
         setSelectedValue(event.target.value);
     };
 
-    console.log("State", state);
-
+    //console.log("State", state);
     return (
         <Container maxWidth={"lg"} sx={{py: 4}}>
 
@@ -59,7 +71,7 @@ function App() {
                                     return {...prevState, desc: e};
                                 })
                             } label={state.label} desc={state.desc}/>
-                        </TabPanel>,
+                        </TabPanel>
 
                         <TabPanel value={value} index={1}>
 
@@ -120,9 +132,11 @@ function App() {
 
                         <Box sx={{px: 4}}>
 
-                            <Typography variant={"body1"} component={"body"}>
-                                Survey
-                            </Typography>
+                            <Tooltip title={state.desc ?? ""}>
+                                <Typography variant={"body1"} component={"body"}>
+                                    {state.label}
+                                </Typography>
+                            </Tooltip>
 
                             <Box component={Paper}>
 
@@ -188,6 +202,12 @@ function App() {
                 </Grid>
             </Box>
 
+            <Snackbar
+                open={!!message}
+                autoHideDuration={2000}
+                onClose={handleClose}
+                message={message}
+            />
 
         </Container>
     );
