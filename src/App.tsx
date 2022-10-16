@@ -3,22 +3,21 @@ import './app.css';
 import {
     Box, Button,
     Container,
-    Grid, IconButton,
-    Paper, Radio, Snackbar,
+    Grid, Paper, Radio, Snackbar,
     Tab, Table, TableBody, TableCell,
-    TableContainer,
     TableHead,
     TableRow,
     Tabs,
-    TextField, Tooltip,
+    Tooltip,
     Typography
 } from "@mui/material";
-import {Add, AddCircle, ArrowDownwardRounded, ArrowUpwardRounded, Cancel, Save} from "@mui/icons-material";
-import {FieldCreatable} from "./implementation/FieldCreatable";
-import Field from "./components/Field";
+import {Cancel, Save} from "@mui/icons-material";
+import FieldComponent from "./components/FieldComponent";
+import Options from "./components/Options";
+import {Field} from "./interfaces/Field";
 
 function App() {
-    const [state, setState] = useState<FieldCreatable>(new FieldCreatable("", ""));
+    const [state, setState] = useState<Field>({label: "", desc: ""});
 
     const [message, setMessage] = useState<string>("");
 
@@ -64,7 +63,7 @@ function App() {
                         </Box>
 
                         <TabPanel value={value} index={0}>
-                            <Field onLabelChange={e => setState(prevState => {
+                            <FieldComponent onLabelChange={e => setState(prevState => {
                                 return {...prevState, label: e}
                             })} onDescChange={
                                 e => setState(prevState => {
@@ -79,46 +78,7 @@ function App() {
                                 Questions
                             </Typography>
                             <Box component={Paper}>
-                                <TableContainer>
-                                    <Table sx={{minWidth: "100%"}} aria-label="simple table">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell/>
-                                                <TableCell>Label</TableCell>
-                                                <TableCell>Value</TableCell>
-                                                <TableCell align="right"/>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                                <TableCell component="th" scope="row">
-                                                    <div style={{
-                                                        display: "flex",
-                                                        flexDirection: "column",
-                                                        alignItems: "center"
-                                                    }}>
-                                                        <IconButton aria-label="move-up" size={"small"}>
-                                                            <ArrowUpwardRounded fontSize={"small"}/>
-                                                        </IconButton>
-                                                        <IconButton aria-label="move-down" size={"small"}>
-                                                            <ArrowDownwardRounded fontSize={"small"}/>
-                                                        </IconButton>
-                                                    </div>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <TextField variant="outlined" size={"small"}/>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <TextField variant="outlined" size={"small"}/>
-                                                </TableCell>
-                                                <TableCell align="right"/>
-                                            </TableRow>
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                                <Box sx={{display: "flex", flexDirection: "row"}}>
-                                    <Button size="small" startIcon={<Add/>}>Add Another</Button>
-                                </Box>
+                                <Options/>
                             </Box>
                         </TabPanel>
 
@@ -223,13 +183,8 @@ function TabPanel(props: TabPanelProps) {
     const {children, value, index, ...other} = props;
 
     return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
+        <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`}
+             aria-labelledby={`simple-tab-${index}`}{...other}>
             {value === index && (
                 <Box sx={{p: 3}}>
                     <Typography>{children}</Typography>

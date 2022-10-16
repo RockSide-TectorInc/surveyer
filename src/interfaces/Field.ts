@@ -1,6 +1,6 @@
 export interface Field {
-    label: String;
-    desc?: String
+    label: string;
+    desc?: string
 }
 
 export interface FieldProps extends Field {
