@@ -20,14 +20,17 @@ import {FieldCreatable} from "./implementation/FieldCreatable";
 import {Option} from "./interfaces/Option";
 import useComponentUtils from "./hooks/useComponentUtils";
 import OptionWrapper from "./components/OptionWrapper";
-import Integrator from "./components/Integrator";
+import Integrator, {IntegratorMap} from "./components/Integrator";
+import AppModal from "./components/common/AppModal";
 
 function App() {
     const [field, setField] = useState<Field>({label: "", desc: ""});
     const [questions, setQuestions] = useState<Option[]>([{label: ""}]);
     const [answers, setAnswers] = useState<Option[]>([{label: ""}]);
 
-    const [message, setMessage, handleClose, activeTab, setActiveTab] = useComponentUtils();
+    const [form, setForm] = useState<IntegratorMap>({});
+
+    const [message, setMessage, handleClose, activeTab, setActiveTab, open, setOpen] = useComponentUtils();
     const handleSetActiveTab = (event: React.SyntheticEvent, newValue: number) => {
         if (newValue > 0 && !field.label.trim()) {
             setMessage("Please add a label to the survey options.")
@@ -84,10 +87,10 @@ function App() {
                                 </Typography>
                             </Tooltip>
 
-                            <Integrator meta={questions} radios={answers}/>
+                            <Integrator meta={questions} radios={answers} form={form} setForm={setForm}/>
 
                             <Box sx={{display: "flex", flexDirection: "row"}} rowGap={4}>
-                                <Button size="small" startIcon={<Save/>}>Save</Button>
+                                <Button size="small" startIcon={<Save/>} onClick={() => setOpen(true)}>Save</Button>
                                 <Button size="small" startIcon={<Cancel/>} variant={"text"}
                                         color={"error"}>Cancel</Button>
                             </Box>
@@ -105,6 +108,10 @@ function App() {
                 onClose={handleClose}
                 message={message}
             />
+
+            <AppModal setOpen={setOpen} open={open}>
+                <pre>{JSON.stringify(form)}</pre>
+            </AppModal>
 
         </Container>
     );

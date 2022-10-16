@@ -5,18 +5,16 @@ import IntegratorRow from "./IntegratorRow";
 
 type IntegratorProps = {
     meta: Option[];
-    radios: Option[]
+    radios: Option[],
+    form: IntegratorMap,
+    setForm: ((value: (((prevState: IntegratorMap) => IntegratorMap) | IntegratorMap)) => void)
 };
 
-interface Map {
+export interface IntegratorMap {
     [key: string]: string;
 }
 
-const Integrator = ({meta, radios}: IntegratorProps) => {
-    const [form, setForm] = useState<Map>({});
-
-    console.log("Form", form);
-
+const Integrator = ({meta, radios, form, setForm}: IntegratorProps) => {
     return (
         <Box component={Paper}>
             <Table sx={{minWidth: "100%"}} aria-label="Integrator">
