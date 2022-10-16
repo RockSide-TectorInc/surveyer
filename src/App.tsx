@@ -20,10 +20,12 @@ import {FieldCreatable} from "./implementation/FieldCreatable";
 import {Option} from "./interfaces/Option";
 import useComponentUtils from "./hooks/useComponentUtils";
 import OptionWrapper from "./components/OptionWrapper";
+import Integrator from "./components/Integrator";
 
 function App() {
     const [field, setField] = useState<Field>({label: "", desc: ""});
     const [questions, setQuestions] = useState<Option[]>([{label: ""}]);
+    const [answers, setAnswers] = useState<Option[]>([{label: ""}]);
 
     const [message, setMessage, handleClose, activeTab, setActiveTab] = useComponentUtils();
     const handleSetActiveTab = (event: React.SyntheticEvent, newValue: number) => {
@@ -32,11 +34,6 @@ function App() {
             setActiveTab(0);
         } else
             setActiveTab(newValue)
-    };
-
-    const [selectedValue, setSelectedValue] = React.useState('a');
-    const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedValue(event.target.value);
     };
 
     return (
@@ -68,6 +65,7 @@ function App() {
 
                         <TabPanel value={activeTab} index={1}>
                             <OptionWrapper label={"Questions"} options={questions} setOptions={setQuestions}/>
+                            <OptionWrapper label={"Answers"} options={answers} setOptions={setAnswers}/>
                         </TabPanel>
 
                     </Grid>
@@ -86,56 +84,7 @@ function App() {
                                 </Typography>
                             </Tooltip>
 
-                            <Box component={Paper}>
-
-                                <Table sx={{minWidth: "100%"}} aria-label="simple table">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell/>
-                                            <TableCell>Excellent</TableCell>
-                                            <TableCell>Good</TableCell>
-                                            <TableCell>Better</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell>
-                                                <Typography variant={"button"} component={"body"}>
-                                                    Math
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell>
-                                                <Radio
-                                                    checked={selectedValue === 'b'}
-                                                    onChange={handleRadioChange}
-                                                    value="b"
-                                                    name="radio-buttons"
-                                                    inputProps={{'aria-label': 'B'}}
-                                                />
-                                            </TableCell>
-                                            <TableCell>
-                                                <Radio
-                                                    checked={selectedValue === 'a'}
-                                                    onChange={handleRadioChange}
-                                                    value="a"
-                                                    name="radio-buttons"
-                                                    inputProps={{'aria-label': 'A'}}
-                                                />
-                                            </TableCell>
-                                            <TableCell>
-                                                <Radio
-                                                    checked={selectedValue === 'c'}
-                                                    onChange={handleRadioChange}
-                                                    value="c"
-                                                    name="radio-buttons"
-                                                    inputProps={{'aria-label': 'C'}}
-                                                />
-                                            </TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-
-                            </Box>
+                            <Integrator meta={questions} radios={answers}/>
 
                             <Box sx={{display: "flex", flexDirection: "row"}} rowGap={4}>
                                 <Button size="small" startIcon={<Save/>}>Save</Button>
