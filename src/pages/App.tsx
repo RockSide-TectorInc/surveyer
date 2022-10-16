@@ -72,14 +72,14 @@ function App() {
 
                     <Grid item md={6} sx={{backgroundColor: ""}}>
 
-                        <Typography variant={"h4"} align={"center"} component={"body"}>
+                        <Typography variant={"h4"} align={"center"} component={"h4"}>
                             Preview
                         </Typography>
 
                         <Box sx={{px: 4}}>
 
                             <Tooltip title={field.desc ?? ""}>
-                                <Typography variant={"body1"} component={"body"}>
+                                <Typography variant={"body1"} component={"h4"}>
                                     {field.label}
                                 </Typography>
                             </Tooltip>
