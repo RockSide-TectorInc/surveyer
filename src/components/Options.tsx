@@ -5,9 +5,12 @@ import OptionComponent from "./OptionComponent";
 import {Add} from "@mui/icons-material";
 import {OptionCreatable} from "../implementation/OptionCreatable";
 
-const Options = ({}) => {
-    const [options, setOptions] = useState<Option[]>([{label: ""}]);
+export type OptionsProps = {
+    options: Option[],
+    setOptions: ((value: (((prevState: Option[]) => Option[]) | Option[])) => void)
+};
 
+const Options = ({options, setOptions}: OptionsProps) => {
     return (
         <>
             <TableContainer>
